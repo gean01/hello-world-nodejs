@@ -1,8 +1,9 @@
 FROM registry.access.redhat.com/ubi9/nodejs-20
 
-# Esta imagem UBI traz dnf. microdnf não está no PATH.
+# Esta imagem UBI traz dnf e o pacote curl-minimal.
+# O pacote curl completo conflita com curl-minimal; --allowerasing troca um pelo outro.
 USER 0
-RUN dnf install -y curl && dnf clean all
+RUN dnf install -y --allowerasing curl && dnf clean all
 USER 1001
 
 WORKDIR /opt/app-root/src
